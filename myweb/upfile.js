@@ -93,16 +93,16 @@ function refresh(){
                             table += "<tr><td>" + output2[num][2] + "</td>";
                             table += "<td>" + output2[num][3] + "</td>";
                             table += "<td>" + output2[num][4] + "</td>";
-                            table += '<td><div class="btn-group" role="group"><button type="button" id="edit" data-num='+num +' class="btn btn-outline-primary">edit</button>';
+                            table += '<td><div class="btn-group" role="group"><button type="button" data-num='+num +' class="edit">edit</button>';
                             table += '<a href="'+'upfiles/'+output2[num][2]+'"download="'+output2[num][2]+ '"type="button" id="download" data-num='+num +'class="btn btn-outline-primary">download</a>';
-                            table += '<button type="button" id="del" data-num='+num +' class="btn btn-outline-primary">delete</button></div></td></tr>';
+                            table += '<button type="button" data-num='+num +' class="del">delete</button></div></td></tr>';
                             
                         }
                     }
                     $("#message_table").html(table);
                     $("#you").text(txt);
 
-                    $("#edit").click(function(){
+                    $(".edit").on( "click",function(){
                         cfile_num=$(this).attr("data-num");
                         $.ajax({
                             type: "POST",
@@ -123,7 +123,7 @@ function refresh(){
                             }
                         });
                     });
-                    $("#del").click(function(){
+                    $(".del").on( "click",function(){
                         
                         cfile_num=$(this).attr("data-num");
                         
