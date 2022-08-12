@@ -28,7 +28,7 @@ $(document).ready(function (e) {
                     }
                     for (var num = 0; num < output.length; num++){
                         if($("#user").val()==output[num][1] && $("#pass").val()==output[num][2] && $("#user").val()!=output[m][1]){
-                            
+                            a=1;
                             $("#errtxt").text("account has been sign");
                         }
                     }
