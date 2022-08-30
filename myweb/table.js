@@ -1,5 +1,6 @@
+var stru="";
 $(document).ready(function (e) {
-    
+    ss();
     $.ajax({
         type: "POST",
         url: "readmsg.php",
@@ -11,8 +12,6 @@ $(document).ready(function (e) {
             output = $.parseJSON(output);
             console.log(output);
             var table = "";
-            var u=0;
-            var stru="";
             var txt="hi ";
             for (var num = 0; num < output.length; num++) {
                 if(output[num][1]!="loguser"){
@@ -23,10 +22,6 @@ $(document).ready(function (e) {
                     table += "<td>" + output[num][5] + "</td></tr>";
                 }
                 
-                if(output[num][1]=="loguser"){
-                    u=parseInt(output[num][2]);
-                    stru+=output[num][2];
-                }
             }
             for (var num = 0; num < output.length; num++){
                 if(output[num][0]==stru){
@@ -41,3 +36,18 @@ $(document).ready(function (e) {
     });
     
 });
+
+function ss(){
+    $.ajax({
+        type: "POST",
+        url: "readsession.php",
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr.status);
+            console.log(thrownError);
+        },
+        success: function (output2) {
+            stru=output2;
+            
+        }
+    });
+}

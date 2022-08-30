@@ -1,6 +1,7 @@
+var stru="";
 $(document).ready(function (e) {
     refresh();
-    
+    //$(".editbox").hide();
     $("#inputf").change(function(){
         var txt = $('#inputf').get(0).files[0].name;
         console.log(txt);
@@ -18,12 +19,6 @@ $(document).ready(function (e) {
             success: function (output) {
                 output = $.parseJSON(output);
                 console.log(output);
-                var stru="";
-                for (var num = 0; num < output.length; num++) {
-                    if(output[num][1]=="loguser"){
-                        stru+=output[num][2];
-                    }
-                }
                 uid+=stru;
                 var files = $('#inputf').prop('files');
                 var data =new FormData();
@@ -55,6 +50,17 @@ $(document).ready(function (e) {
 function refresh(){
     $.ajax({
         type: "POST",
+        url: "readsession.php",
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr.status);
+            console.log(thrownError);
+        },
+        success: function (output2) {
+            stru=output2;
+        } 
+    });
+    $.ajax({
+        type: "POST",
         url: "readmsg.php",
         error: function (xhr, ajaxOptions, thrownError) {
             console.log(xhr.status);
@@ -64,15 +70,8 @@ function refresh(){
             output = $.parseJSON(output);
             console.log(output);
             var table = "";
-            var u=0;
-            var stru="";
             var txt="hi ";
-            for (var num = 0; num < output.length; num++) {
-                if(output[num][1]=="loguser"){
-                    u=parseInt(output[num][2]);
-                    stru+=output[num][2];
-                }
-            }
+            
             for (var num = 0; num < output.length; num++){
                 if(output[num][0]==stru){
                     txt+=output[num][1];
@@ -96,13 +95,14 @@ function refresh(){
                             table += '<td><div class="btn-group" role="group"><button type="button" data-num='+num +' class="edit">edit</button>';
                             table += '<a href="'+'upfiles/'+output2[num][2]+'"download="'+output2[num][2]+ '"type="button" id="download" data-num='+num +'class="btn btn-outline-primary">download</a>';
                             table += '<button type="button" data-num='+num +' class="del">delete</button></div></td></tr>';
-                            
+                        
                         }
                     }
                     $("#message_table").html(table);
                     $("#you").text(txt);
 
                     $(".edit").on( "click",function(){
+                        //$(".editbox").show();
                         cfile_num=$(this).attr("data-num");
                         $.ajax({
                             type: "POST",
